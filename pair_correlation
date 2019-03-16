@@ -5,10 +5,10 @@
 def pair_correlation(Arr1, Arr2, p, rmax, dr):
     """
     # This is to calculate the average radial density distribution of particle 2
-    # in reference to the clusters from color 1.
+    # in reference to particle 1.
     # Arguments
-    # Arr1, 2-D array of the reference cluster center
-    # Arr2, 2-D array of the analyzed cluster center
+    # Arr1, 2-D array of coordinates of particle 1
+    # Arr2, 2-D array of coordinates of particle 2
     # p = (x0, y0, w, h)
     # (x0, y0), the origin coordinates of the rectangular area to be analyzed
     # w, h, the width and the height of the area to be analyzed
@@ -21,8 +21,8 @@ def pair_correlation(Arr1, Arr2, p, rmax, dr):
     
     x0, y0, w, h = p
     
-    # first, get the clusters from color 1 that are in the area to be analyzed,
-    # and remove the clusters that are too close (distance < rmax) to the border of the area.
+    
+    # remove particles that are too close (distance < rmax) to the border of the area
     B11 = Arr1[:,0] > x0 + rmax
     B12 = Arr1[:,0] < x0 + w - rmax
     B13 = Arr1[:,1] > y0 + rmax
@@ -30,7 +30,7 @@ def pair_correlation(Arr1, Arr2, p, rmax, dr):
     mask1 = np.where(B11 & B12 & B13 & B14)
     A1 = Arr1[mask1]
     
-    # second, get the clusters from color 2 that are in the area to be analyzed
+    # remove particles that are too close (distance < rmax) to the border of the area
     B21 = Arr2[:,0] > x0
     B22 = Arr2[:,0] < x0 + w
     B23 = Arr2[:,1] > y0
@@ -38,17 +38,17 @@ def pair_correlation(Arr1, Arr2, p, rmax, dr):
     mask2 = np.where(B21 & B22 & B23 & B24)
     A2 = Arr2[mask2]
 
-    # the number of clusters from each dataset
+    # the number of particles from 1 and 2
     num_clusters_1 = len(A1)
     num_clusters_2 = len(A2)
 
-    # the analyzed radii from a cluster from dataset 1
+    # the analyzed radii from 1
     edge = np.arange(0., rmax + 1.1 * dr, dr)
     num_step = len(edge) - 1
 
     radius = (edge[:-1] + edge[1:]) / 2
 
-    # the average density of the analyzed clusters
+    # the average density of the analyzed particles
     density = num_clusters_2 / (w * h)
 
     d = distance.cdist(A1, A2, 'euclidean')
