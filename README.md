@@ -1,3 +1,3 @@
 # Venus
 
-Here it contains some small functions.
+Let the world be full of, as it represents, beauty and love.
