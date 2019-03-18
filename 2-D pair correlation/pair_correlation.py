@@ -1,6 +1,6 @@
 
 # -*- coding: utf-8 -*-
-
+# These codes are adpated from https://github.com/cfinch/Shocksolution_Examples/blob/d050f3a1c6cd7b251dd716dd81139949009f3cee/PairCorrelation/paircorrelation.py
 # python3.6
 
 def pair_correlation(Arr1, Arr2, p, rmax, dr):
